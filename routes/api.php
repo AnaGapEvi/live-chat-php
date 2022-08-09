@@ -39,6 +39,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/room-messages/{id}', [UserRoomController::class, 'room'])->name('room-message');
     Route::post('/room-messages', [UserRoomController::class, 'messageStoreRoom'])->name('room-message-store');
     Route::get('/user-room/{id}', [RoomController::class, 'userRoom'])->name('room-user');
+    Route::get('/status/user-room-message/{id}', [UserRoomController::class, 'unRead'])->name('un-read-group');
+    Route::put('/status/room-message-read', [UserRoomController::class, 'isRead'])->name('is-read-group');
+
 });
 
 

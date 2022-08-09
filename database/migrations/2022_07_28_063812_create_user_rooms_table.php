@@ -18,6 +18,7 @@ class CreateUserRoomsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('room_id');
             $table->text('message');
+            $table->integer('isRead')->default('0');
             $table->timestamps();
         });
     }

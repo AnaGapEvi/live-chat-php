@@ -14,15 +14,42 @@ use Illuminate\Support\Facades\Auth;
 class UserRoomController extends Controller
 {
     public function room($id){
-
-
         return UserRoom::where('room_id', $id)->with('user')->get();
-//        return UserRoom::whit('users')->where('room_id', $id)->get();
-
     }
-//    public function  userRoom($id){
-//        return Room::where('room_id', $id)->with('user')->get();
+
+
+
+
+    public function rooms(){
+        $rooms = UserRoom::with('rooms')->get();
+        return response()->json($rooms);
+    }
+
+
+
+//    public function isRead(Request $request){
+//
+//        $messages = UserRoom::where('room_id', $request->roomID)
+//            ->where('user_id', Auth::id())
+//            ->where('isRead', 0)
+//            ->get();
+//
+//         for($i=0; $i<count($messages); $i++ ){
+//            $messages[$i]->isRead='1';
+//            $messages[$i]->save();
+//        }
+//        return 'message readed';
 //    }
+
+
+
+    public function unRead($id){
+        $user = User::find($id);
+        $conut = $user->messages()->where('receiverId', Auth::id())->where('isRead', 0)->count();
+       return  response()->json($conut);
+    }
+
+
 
     public function messageStoreRoom(Request $request){
         $user = Auth::user();

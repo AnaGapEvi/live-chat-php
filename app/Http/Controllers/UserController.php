@@ -19,9 +19,9 @@ class UserController extends Controller
 {
 
     use HasApiTokens, HasFactory, Notifiable;
+
     public function users(){
         return User::where('id', '!=', Auth::id())->get();
-//        return response()->json($users);
     }
 
     public function register(Request $request)

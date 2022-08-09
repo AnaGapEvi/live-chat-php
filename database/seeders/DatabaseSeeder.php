@@ -16,16 +16,16 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         DB::table('rooms')->insert([
-            'name' => 'TeamA',
-            'description' => 'team from A',
+            'name' => 'Room 1',
+            'description' => 'Room 1',
         ]);
         DB::table('rooms')->insert([
-            'name' => 'TeamB',
-            'description' => 'team from B',
+            'name' => 'Room 2',
+            'description' => 'Room 2',
         ]);
         DB::table('rooms')->insert([
-            'name' => 'TeamC',
-            'description' => 'team from C',
+            'name' => 'Room 3',
+            'description' => 'Room  3',
         ]);
     }
 }
