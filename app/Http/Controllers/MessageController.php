@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CountMessage;
 use App\Events\NewTrade;
 use App\Events\SendMessage;
 use App\Models\Message;
@@ -34,7 +35,11 @@ class MessageController extends Controller
 
         $user = User::find($id);
         $conut = $user->messages()->where('receiverId', Auth::id())->where('isRead', 0)->count();
+
+        event(new CountMessage($conut));
+
        return  response()->json($conut);
+//       return  'count';
     }
 
     public function messages($id){
@@ -54,13 +59,6 @@ class MessageController extends Controller
             'user_id'=>Auth::user()->id,
         ]);
 
-////Notification
-//        $fromUser = User::find('user_id');
-//        $toUser = User::find('receiverId');
-//        $toUser->notify(new NewMessage($fromUser));
-//        Notification::send($toUser, new NewMessage($fromUser));
-
-////laravel-echo
         event(new SendMessage($user, $messages, $receiverId));
 
         return'message sent';

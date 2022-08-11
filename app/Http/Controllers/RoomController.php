@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewTrade;
+use App\Events\SendMessage;
 use App\Models\Room;
 use App\Models\User;
 use App\Models\UserRoom;
@@ -11,6 +13,7 @@ class RoomController extends Controller
 {
     public function rooms(){
         $rooms = Room::get();
+
         return response()->json($rooms);
     }
 
