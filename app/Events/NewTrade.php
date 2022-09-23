@@ -20,22 +20,12 @@ class NewTrade implements ShouldBroadcast
 
     public $room;
 
-    /**
-     * Create a new event instance.
-     *
-     * @return void
-     */
     public function __construct($room)
     {
-        $this->room=$room;
+        $this->room = $room;
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
+    public function broadcastOn(): Channel
     {
         return new Channel('chat');
     }

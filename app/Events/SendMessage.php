@@ -36,7 +36,7 @@ class SendMessage implements ShouldBroadcast
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
-    public function broadcastOn()
+    public function broadcastOn(): Channel
     {
         return new Channel('chat-channel');
     }

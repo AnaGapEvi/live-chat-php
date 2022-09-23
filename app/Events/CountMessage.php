@@ -16,13 +16,13 @@ class CountMessage implements ShouldBroadcast
 
     public $count;
     /**
-     * Create a new event instance.
+     * Create a new ev ent instance.
      *
      * @return void
      */
     public function __construct($count)
     {
-        $this->count=$count;
+        $this->count = $count;
     }
 
     /**

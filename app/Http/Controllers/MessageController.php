@@ -3,24 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Events\CountMessage;
-use App\Events\NewTrade;
 use App\Events\SendMessage;
 use App\Models\Message;
 use App\Models\User;
-use App\Notifications\NewMessage;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Notification;
 
 class MessageController extends Controller
 {
-    public function __construct()
+
+    public function isRead(Request $request)
     {
-        $this->middleware('auth');
-    }
-
-    public function isRead(Request $request){
-
         $user = User::find($request->userID);
         $messages = $user->messages()->where('receiverId', Auth::id())->where('isRead', 0)->get();
 
@@ -28,29 +22,32 @@ class MessageController extends Controller
             $messages[$i]->isRead='1';
             $messages[$i]->save();
         }
-        return 'message readed';
+
+        return response()->json(['message readed']);
     }
 
-    public function unRead($id){
 
+    public function unRead(int $id): JsonResponse
+    {
         $user = User::find($id);
         $conut = $user->messages()->where('receiverId', Auth::id())->where('isRead', 0)->count();
-
         event(new CountMessage($conut));
 
        return  response()->json($conut);
-//       return  'count';
     }
 
-    public function messages($id){
-
+    // messages chat
+    public function messages(int $id)
+    {
        return Message::with('user')
             ->whereIn('receiverId',[Auth()->id(),$id ])
             ->whereIn('user_id', [$id,Auth()->id()])
             ->get();
     }
 
-    public function messageStore(Request $request){
+    // create new message
+    public function messageStore(Request $request): JsonResponse
+    {
         $user = Auth::user();
         $receiverId = $request->receiverId;
         $messages = Message::create([
@@ -61,6 +58,6 @@ class MessageController extends Controller
 
         event(new SendMessage($user, $messages, $receiverId));
 
-        return'message sent';
+        return response()->json(['message'=>'message sent'], );
     }
 }
